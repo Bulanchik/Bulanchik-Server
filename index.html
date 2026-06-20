@@ -2,58 +2,54 @@
 <html lang="ru">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Bulanchik Server | Minecraft Network</title>
+    <title>Bulanchik Server</title>
 
+    <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/mobile.css">
 </head>
 
 <body>
 
-    <!-- COSMOS BACKGROUND -->
+    <!-- ================= BACKGROUND ================= -->
     <div class="space-bg"></div>
-    <div class="planet small"></div>
-    <div class="planet big"></div>
+    <div class="stars"></div>
+    <div class="planets"></div>
     <div class="blackhole"></div>
 
-    <!-- HEADER -->
+    <!-- ================= HEADER ================= -->
     <header class="header">
 
-        <div class="container">
+        <div class="header-container">
 
-            <div class="header-wrapper">
+            <!-- LOGO -->
+            <div class="logo">
+                <div class="logo-title">BULANCHIK</div>
+                <div class="logo-sub">bulanchik.aternos.me</div>
+            </div>
 
-                <div class="logo">
-                    <div class="logo-main">BULANCHIK</div>
-                    <div class="logo-ip">Bulanchik.aternos.me</div>
-                </div>
+            <!-- NAVIGATION -->
+            <nav class="nav">
 
-                <nav class="nav">
+                <a href="#home">Главная</a>
+                <a href="#events">Ивенты</a>
+                <a href="#community">Сообщество</a>
+                <a href="pages/news.html">Новости</a>
+                <a href="pages/rules.html">Правила</a>
+                <a href="pages/support.html">Поддержка</a>
 
-                    <a href="#home">Главная</a>
-                    <a href="events.html">Ивенты</a>
-                    <a href="shop.html">Магазин</a>
-                    <a href="boss.html">Босс</a>
-                    <a href="top.html">Топ</a>
-                    <a href="community.html">Сообщество</a>
-                    <a href="support.html">Поддержка</a>
+            </nav>
 
-                </nav>
+            <!-- AUTH BUTTONS -->
+            <div class="auth">
 
-                <div class="auth">
-
-                    <a href="login.html" class="auth-btn">Вход</a>
-                    <a href="register.html" class="auth-btn reg">Регистрация</a>
-
-                </div>
+                <a href="pages/login.html" class="btn">Вход</a>
+                <a href="pages/register.html" class="btn primary">Регистрация</a>
 
             </div>
 
@@ -61,20 +57,23 @@
 
     </header>
 
-    <!-- HERO -->
-    <section class="hero">
+    <!-- ================= HERO ================= -->
+    <section id="home" class="hero">
 
-        <div class="container">
+        <div class="hero-container">
 
             <h1 class="hero-title">BULANCHIK SERVER</h1>
 
-            <p class="hero-desc">Survival • PvP • Boss • Events • Economy</p>
+            <p class="hero-desc">
+                Survival • PvP • Economy • Events • Community
+            </p>
 
-            <div class="server-box">
+            <!-- IP BLOCK -->
+            <div class="ip-box">
 
-                <div class="server-ip">Bulanchik.aternos.me</div>
+                <span id="serverIP">bulanchik.aternos.me</span>
 
-                <button class="copy-btn">Скопировать IP</button>
+                <button id="copyBtn" class="copy-btn">Скопировать IP</button>
 
             </div>
 
@@ -82,7 +81,7 @@
 
     </section>
 
-    <!-- INFO -->
+    <!-- ================= QUICK INFO ================= -->
     <section class="info">
 
         <div class="container">
@@ -90,18 +89,18 @@
             <div class="grid">
 
                 <div class="card">
-                    <h3>⚔ PvP</h3>
-                    <p>Сражения и рейтинги</p>
+                    ⚔ PvP режим
+                    <p>Сражения между игроками</p>
                 </div>
 
                 <div class="card">
-                    <h3>💰 Экономика</h3>
+                    💰 Экономика
                     <p>Зарабатывай и развивайся</p>
                 </div>
 
                 <div class="card">
-                    <h3>🎮 Ивенты</h3>
-                    <p>Ежедневные активности</p>
+                    🎮 Ивенты
+                    <p>Ежедневные события сервера</p>
                 </div>
 
             </div>
@@ -110,21 +109,32 @@
 
     </section>
 
-    <!-- EVENTS -->
-    <section class="events">
+    <!-- ================= EVENTS ================= -->
+    <section id="events" class="events">
 
         <div class="container">
 
             <div class="section-title">
-                <h2>Ивенты</h2>
-                <p>Активные события сервера</p>
+                <h2>Ивенты сервера</h2>
+                <p>Активные игровые события</p>
             </div>
 
             <div class="grid">
 
-                <div class="card">⚔ PvP Турнир</div>
-                <div class="card">🌀 Босс Ивент</div>
-                <div class="card">💰 Фарм День</div>
+                <div class="card">
+                    ⚔ PvP Турнир
+                    <p>Лучшие игроки получают награды</p>
+                </div>
+
+                <div class="card">
+                    🌀 Босс Ивент
+                    <p>Совместное уничтожение босса</p>
+                </div>
+
+                <div class="card">
+                    💰 Фарм день
+                    <p>Увеличенный дроп и ресурсы</p>
+                </div>
 
             </div>
 
@@ -132,8 +142,8 @@
 
     </section>
 
-    <!-- COMMUNITY MINI -->
-    <section class="community-mini">
+    <!-- ================= COMMUNITY ================= -->
+    <section id="community" class="community">
 
         <div class="container">
 
@@ -144,8 +154,13 @@
 
             <div class="grid">
 
-                <a class="card link" href="community.html">💬 Discord</a>
-                <a class="card link" href="community.html">📢 Telegram</a>
+                <a href="#" class="card social discord">
+                    💬 Discord
+                </a>
+
+                <a href="#" class="card social telegram">
+                    📢 Telegram
+                </a>
 
             </div>
 
@@ -153,35 +168,18 @@
 
     </section>
 
-    <!-- QUICK LINKS -->
-    <section class="quick">
-
-        <div class="container">
-
-            <div class="grid">
-
-                <a href="boss.html" class="card link">🌀 Босс</a>
-                <a href="top.html" class="card link">🏆 Топ</a>
-                <a href="shop.html" class="card link">🛒 Магазин</a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- CTA -->
+    <!-- ================= CTA ================= -->
     <section class="cta">
 
         <div class="container">
 
             <div class="cta-box">
 
-                <h2>Готов играть?</h2>
+                <h2>Присоединяйся к серверу</h2>
 
-                <p>Подключайся прямо сейчас</p>
+                <p>Начни играть прямо сейчас и получай награды</p>
 
-                <div class="cta-ip">Bulanchik.aternos.me</div>
+                <div class="cta-ip">bulanchik.aternos.me</div>
 
                 <a href="#" class="cta-btn">Играть</a>
 
@@ -191,20 +189,52 @@
 
     </section>
 
-    <!-- FOOTER -->
+    <!-- ================= LEGAL / JURISDICTION ================= -->
     <footer class="footer">
 
         <div class="container">
 
-            <p>© 2026 Bulanchik Server</p>
-            <p>Не связан с Mojang / Microsoft</p>
+            <p>© 2026 Bulanchik Server. Все права защищены.</p>
+
+            <p>
+                Данный проект является независимым игровым Minecraft-сервером и не связан с Mojang Studios,
+                Microsoft Corporation или их партнёрами.
+            </p>
+
+            <p>
+                Любое копирование материалов сайта, дизайна, логики или ассетов без разрешения запрещено и может
+                преследоваться в рамках действующего законодательства об авторском праве и интеллектуальной
+                собственности.
+            </p>
+
+            <p>
+                Сайт и сервер предоставляются “как есть” (AS IS). Администрация не несёт ответственности за возможные
+                перебои работы, потерю данных или временную недоступность сервера.
+            </p>
 
         </div>
 
     </footer>
 
-    <!-- SUPPORT -->
-    <a href="support.html" class="support">💬</a>
+    <!-- ================= SUPPORT FLOAT BUTTON ================= -->
+    <a href="pages/support.html" class="support-btn">💬</a>
+
+    <!-- ================= COPY SCRIPT ================= -->
+    <script>
+        const btn = document.getElementById("copyBtn");
+
+        btn.addEventListener("click", () => {
+
+            navigator.clipboard.writeText("bulanchik.aternos.me");
+
+            btn.innerText = "Скопировано ✓";
+
+            setTimeout(() => {
+                btn.innerText = "Скопировать IP";
+            }, 2000);
+
+        });
+    </script>
 
 </body>
 
