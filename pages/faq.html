@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bulanchik — FAQ</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .faq-item {
+            background: rgba(15, 15, 27, 0.9);
+            border: 1px solid #222235;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #ffaa00;
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.15);
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffaa00;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            margin-top: 10px;
+            color: #bbb;
+            display: none;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="space-canvas"></canvas>
+    <div class="planet p-green"></div>
+
+    <header>
+        <div class="logo">Bulanchik</div>
+        <ul>
+            <li><a href="/">🏠 Главная</a></li>
+            <li><a href="/pages/shop.html">🛒 Магазин</a></li>
+            <li><a href="/pages/donate.html">💎 Донат-Инфо</a></li>
+            <li><a href="/pages/rules.html">📜 Правила</a></li>
+            <li><a href="/pages/support.html">📩 Поддержка</a></li>
+        </ul>
+    </header>
+
+    <main class="main-banner">
+        <h1 style="color: #fff; margin-bottom: 30px;">Часто задаваемые вопросы (FAQ)</h1>
+
+        <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">Как начать играть на сервере? <span>▼</span></div>
+                <div class="faq-answer">Вам нужна любая версия Minecraft (желательно актуальная). Скопируйте наш
+                    IP-адрес: <strong>mc.bulanchik.ru</strong>, добавьте его в список серверов и подключайтесь! При
+                    первом входе введите команду <code>/reg [пароль] [повтор_пароля]</code> для защиты аккаунта.</div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">Я купил донат, через сколько он придет? <span>▼</span></div>
+                <div class="faq-answer">Обычно донат-привилегии и кейсы выдаются автоматически в течение 5–10 минут
+                    после оплаты. Если этого не произошло, обязательно напишите в нашу систему <a
+                        href="/pages/support.html" style="color:#ffaa00;">Поддержки</a>, и Владелец проекта решит
+                    проблему!</div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">Где разрешено строить дома? <span>▼</span></div>
+                <div class="faq-answer">Строить можно в любом свободном месте основного мира. Главное — не забывайте
+                    заприватить постройку деревянным топором (команды <code>//wand</code>, <code>/rg claim</code>),
+                    чтобы вас не загриферили. Портить чужую территорию строго запрещено правилами.</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleFaq(el) {
+            const ans = el.querySelector('.faq-answer');
+            const span = el.querySelector('.faq-question span');
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                span.innerText = '▼';
+            } else {
+                ans.style.display = 'block';
+                span.innerText = '▲';
+            }
+        }
+
+        // Звёздный фон
+        const canvas = document.getElementById('space-canvas'); const ctx = canvas.getContext('2d'); let stars = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); }
+        function init() { stars = []; for (let i = 0; i < 80; i++) stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2 + 1, color: '#00ffff', alpha: Math.random(), speed: 0.02 }); }
+        function run() { ctx.clearRect(0, 0, canvas.width, canvas.height); stars.forEach(s => { s.alpha += s.speed; if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed; ctx.globalAlpha = Math.abs(s.alpha); ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill(); }); requestAnimationFrame(run); }
+        window.addEventListener('resize', resize); resize(); run();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+.admin-panel {
+    padding: 20px;
+    background: rgba(255, 255, 255, .04);
+    border-radius: 14px;
+}
+
+.admin-btn {
+    padding: 10px;
+    background: #8b5cf6;
+    border: none;
+}

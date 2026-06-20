@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа - Bulanchik</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    ```
+    <style>
+        .pay-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .method-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .method-label:hover {
+            border-color: gold;
+            background: rgba(255, 170, 0, .08);
+        }
+
+        .pay-card {
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .pay-title {
+            color: gold;
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-box {
+            background: rgba(0, 0, 0, .25);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .05);
+        }
+
+        .info-box span {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .info-box b {
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+    ```
+
+</head>
+
+<body>
+
+    <div class="bg-grid"></div>
+
+    <div class="sidebar">
+        <h2>BULANCHIK</h2>
+
+        ```
+        <a href="../index.html">Главная</a>
+        <a href="shop.html">Магазин</a>
+        <a href="donate.html">Донат</a>
+        <a href="rules.html">Правила</a>
+        <a href="online.html">Онлайн</a>
+        ```
+
+    </div>
+
+    <div class="content">
+
+        <header>
+            <div>
+                <h1>💳 Оформление покупки</h1>
+                <div class="ip-badge" id="order-summary">
+                    Загрузка...
+                </div>
+            </div>
+        </header>
+
+        <div class="main-box">
+
+            <div class="pay-flex">
+
+                <div class="pay-card">
+
+                    <div class="pay-title">
+                        📦 Информация о заказе
+                    </div>
+
+                    <div class="order-info">
+
+                        <div class="info-box">
+                            <span>Товар</span>
+                            <b id="item-name">...</b>
+                        </div>
+
+                        <div class="info-box">
+                            <span>Стоимость</span>
+                            <b id="item-price">0 ₽</b>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="pay-card">
+
+                    <div class="pay-title">
+                        🎮 Ваш игровой аккаунт
+                    </div>
+
+                    <input type="text" class="mc-input" id="player-nick" placeholder="Введите никнейм на сервере">
+
+                </div>
+
+                <div class="pay-card">
+
+                    <div class="pay-title">
+                        💳 Выберите оплату
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+
+                        <label class="method-label">
+                            <input type="radio" name="pay-method" value="Карта" checked>
+                            💳 Банковская карта
+                        </label>
+
+                        <label class="method-label">
+                            <input type="radio" name="pay-method" value="СБП">
+                            ⚡ Система быстрых платежей
+                        </label>
+
+                        <label class="method-label">
+                            <input type="radio" name="pay-method" value="ЮMoney">
+                            💰 ЮMoney
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="pay-card">
+
+                    <div class="pay-title">
+                        📝 Дополнительные данные
+                    </div>
+
+                    <input type="text" class="mc-input" id="vk" placeholder="Ваш Telegram или VK (необязательно)">
+
+                </div>
+
+                <button class="btn-buy" onclick="processPayment()" style="font-size:16px;padding:18px;">
+
+                    ОПЛАТИТЬ — <span id="total-price">0</span> ₽
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const urlParams =
+            new URLSearchParams(window.location.search);
+
+        const itemName =
+            urlParams.get("item") || "Товар";
+
+        const itemPrice =
+            urlParams.get("price") || "0";
+
+        document.getElementById("order-summary").innerText =
+            "Выбран товар: " + itemName;
+
+        document.getElementById("item-name").innerText =
+            itemName;
+
+        document.getElementById("item-price").innerText =
+            itemPrice + " ₽";
+
+        document.getElementById("total-price").innerText =
+            itemPrice;
+
+        async function processPayment() {
+
+            const nickname =
+                document.getElementById("player-nick")
+                    .value.trim();
+
+            if (!nickname) {
+
+                alert(
+                    "Введите игровой ник!"
+                );
+
+                return;
+            }
+
+            const payment =
+                document.querySelector(
+                    'input[name="pay-method"]:checked'
+                ).value;
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://localhost:3000/buy",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                nickname: nickname,
+                                item: itemName,
+                                price: itemPrice,
+                                payment: payment
+                            })
+                        });
+
+                const data =
+                    await response.json();
+
+                if (data.success) {
+
+                    alert(
+                        "Заказ успешно создан!"
+                    );
+
+                    window.location.href =
+                        "shop.html";
+
+                } else {
+
+                    alert(
+                        "Ошибка оформления заказа"
+                    );
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
+
+                alert(
+                    "Сервер не запущен!\n\nЗапусти node server.js"
+                );
+
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

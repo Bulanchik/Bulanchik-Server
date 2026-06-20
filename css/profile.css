@@ -1,0 +1,129 @@
+/* ================= PROFILE PAGE ================= */
+
+.profile {
+    padding: 120px 0;
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ================= PROFILE CARD ================= */
+
+.profile-card {
+    flex: 1;
+    min-width: 280px;
+
+    padding: 20px;
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .08);
+    backdrop-filter: blur(12px);
+}
+
+/* AVATAR */
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+
+    background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+    margin-bottom: 15px;
+}
+
+/* NAME */
+
+.profile-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+/* STATS */
+
+.profile-stats {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .04);
+}
+
+/* ================= RIGHT PANEL ================= */
+
+.profile-right {
+    flex: 1;
+    min-width: 280px;
+
+    padding: 20px;
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(255, 255, 255, .08);
+}
+
+/* BUTTONS */
+
+.profile-btn {
+    display: block;
+    width: 100%;
+
+    padding: 10px;
+    margin-top: 10px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+    color: #000;
+
+    cursor: pointer;
+    font-weight: 700;
+
+    transition: .3s;
+}
+
+.profile-btn:hover {
+    transform: translateY(-4px);
+}
+
+/* ================= LEVEL BAR ================= */
+
+.level-bar {
+    height: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .08);
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.level-fill {
+    height: 100%;
+    width: 60%;
+
+    background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px) {
+
+    .profile-container {
+        flex-direction: column;
+    }
+
+}

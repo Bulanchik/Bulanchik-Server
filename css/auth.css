@@ -1,0 +1,29 @@
+.auth-box {
+    width: 320px;
+    margin: auto;
+    padding: 20px;
+
+    background: rgba(255, 255, 255, .05);
+    border-radius: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, .1);
+
+    background: transparent;
+    color: #fff;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+
+    background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+    border: none;
+    border-radius: 10px;
+}

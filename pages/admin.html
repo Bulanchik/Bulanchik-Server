@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | Bulanchik</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, .08);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: gold;
+        }
+
+        .order {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid gold;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bg-grid"></div>
+
+    <div class="sidebar">
+        <h2>BULANCHIK</h2>
+
+        <a href="../index.html">Главная</a>
+        <a href="shop.html">Магазин</a>
+        <a href="donate.html">Донат</a>
+        <a href="rules.html">Правила</a>
+        <a href="online.html">Онлайн</a>
+        <a href="admin.html" class="active">Админка</a>
+
+    </div>
+
+    <div class="content">
+
+        <header>
+            <h1>⚙ Админ-панель магазина</h1>
+            <div class="ip-badge">
+                Просмотр всех покупок
+            </div>
+        </header>
+
+        <div class="stats">
+
+            <div class="stat-box">
+                <div>Всего заказов</div>
+                <div class="stat-value" id="ordersCount">0</div>
+            </div>
+
+            <div class="stat-box">
+                <div>Общий доход</div>
+                <div class="stat-value" id="income">0 ₽</div>
+            </div>
+
+        </div>
+
+        <div id="orders"></div>
+
+    </div>
+
+    <script>
+
+        async function loadOrders() {
+
+            const response = await fetch("http://localhost:3000/orders");
+
+            const orders = await response.json();
+
+            document.getElementById("ordersCount").innerText =
+                orders.length;
+
+            let income = 0;
+
+            orders.forEach(o => {
+                income += Number(o.price);
+            });
+
+            document.getElementById("income").innerText =
+                income + " ₽";
+
+            const container =
+                document.getElementById("orders");
+
+            container.innerHTML = "";
+
+            orders.forEach(order => {
+
+                container.innerHTML += `
+<div class="order">
+
+<h3>${order.item}</h3>
+
+<p><b>Игрок:</b> ${order.nickname}</p>
+
+<p><b>Цена:</b> ${order.price} ₽</p>
+
+<p><b>Оплата:</b> ${order.payment}</p>
+
+<p><b>Дата:</b> ${order.created}</p>
+
+<button class="delete-btn"
+onclick="deleteOrder(${order.id})">
+Удалить
+</button>
+
+</div>
+`;
+
+            });
+
+        }
+
+        async function deleteOrder(id) {
+
+            await fetch(
+                `http://localhost:3000/orders/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            loadOrders();
+
+        }
+
+        loadOrders();
+
+        setInterval(loadOrders, 3000);
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+@media(max-width:900px) {
+
+    .header-wrapper {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .server-box {
+        width: 100%;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .hero-title {
+        font-size: 34px;
+    }
+
+}

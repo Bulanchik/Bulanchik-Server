@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bulanchik — Поддержка</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <canvas id="space-canvas"></canvas>
+    <div class="planet p-purple"></div>
+
+    <header>
+        <div class="logo">Bulanchik</div>
+        <ul>
+            <li><a href="/">🏠 Главная</a></li>
+            <li><a href="/pages/shop.html">🛒 Магазин</a></li>
+            <li><a href="/pages/donate.html">💎 Донат-Инфо</a></li>
+            <li><a href="/pages/rules.html">📜 Правила</a></li>
+            <li><a href="/pages/support.html">📩 Поддержка</a></li>
+        </ul>
+    </header>
+
+    <main class="main-banner">
+        <h1 style="color: #ffaa00;">Центр Поддержки Сервера</h1>
+
+        <div class="sponsor-grid" style="margin-bottom: 25px;">
+            <div class="sponsor-card creator">
+                <h4>Bulanchik</h4>
+                <p>Создатель (Отвечает тут)</p>
+            </div>
+            <div class="sponsor-card staff">
+                <h4>Admin_Help</h4>
+                <p>Модерация тикетов</p>
+            </div>
+        </div>
+
+        <section class="info-section support-box">
+            <h3>📩 Задать вопрос администрации</h3>
+            <input type="text" id="nick" placeholder="Ваш никнейм на сервере">
+            <textarea id="msg" rows="4" placeholder="Ваш вопрос или описание проблемы с донатом..."></textarea>
+            <button class="action-btn" onclick="submitTicket()">Отправить обращение</button>
+
+            <h3 style="margin-top: 30px; color: #ffaa00;">Список открытых обращений</h3>
+            <div class="ticket-list" id="tickets-box"></div>
+        </section>
+    </main>
+
+    <script>
+        // Звезды
+        const canvas = document.getElementById('space-canvas'); const ctx = canvas.getContext('2d'); let stars = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); }
+        function init() { stars = []; for (let i = 0; i < 100; i++) stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2 + 1, color: '#ffaa00', alpha: Math.random(), speed: 0.02 }); }
+        function run() { ctx.clearRect(0, 0, canvas.width, canvas.height); stars.forEach(s => { s.alpha += s.speed; if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed; ctx.globalAlpha = Math.abs(s.alpha); ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill(); }); requestAnimationFrame(run); }
+        window.addEventListener('resize', resize); resize(); run();
+
+        // Логика отправки тикетов на бэкенд
+        async function loadTickets() {
+            const res = await fetch('/api/tickets');
+            const data = await res.json();
+            const box = document.getElementById('tickets-box');
+            box.innerHTML = '';
+
+            data.forEach(t => {
+                box.innerHTML += `
+                    <div class="ticket-item">
+                        <strong>Игрок:</strong> ${t.name}
+                        <p style="margin: 5px 0;">${t.text}</p>
+                        <div class="ticket-reply">
+                            ${t.reply ? `<strong>Ответ Создателя:</strong> ${t.reply}` : `<span style="color:#aaa;">⌛ Ожидание ответа от Bulanchik...</span>`}
+                        </div>
+                        ${!t.reply ? `
+                        <div style="margin-top: 10px; display: flex; gap: 5px;">
+                            <input type="text" id="reply-to-${t.id}" placeholder="Ваш ответ админа..." style="margin:0; padding:5px;">
+                            <button class="action-btn" style="padding:5px 12px; font-size:12px;" onclick="replyTicket(${t.id})">Ответить</button>
+                        </div>` : ''}
+                    </div>
+                `;
+            });
+        }
+
+        async function submitTicket() {
+            const name = document.getElementById('nick').value;
+            const text = document.getElementById('msg').value;
+            if (!name || !text) return alert('Заполните поля!');
+
+            await fetch('/api/tickets', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, text })
+            });
+            document.getElementById('msg').value = '';
+            loadTickets();
+        }
+
+        async function replyTicket(id) {
+            const replyText = document.getElementById(`reply-to-${id}`).value;
+            if (!replyText) return alert('Введите текст ответа!');
+
+            await fetch('/api/tickets/reply', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, replyText })
+            });
+            loadTickets();
+        }
+
+        window.onload = loadTickets;
+    </script>
+</body>
+
+</html>

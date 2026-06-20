@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bulanchik — Топ Игроков</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <canvas id="space-canvas"></canvas>
+
+    <header>
+        <div class="logo">Bulanchik</div>
+        <ul>
+            <li><a href="/">🏠 Главная</a></li>
+            <li><a href="/pages/shop.html">🛒 Магазин</a></li>
+            <li><a href="/pages/donate.html">💎 Донат-Инфо</a></li>
+            <li><a href="/pages/rules.html">📜 Правила</a></li>
+            <li><a href="/pages/support.html">📩 Поддержка</a></li>
+        </ul>
+    </header>
+
+    <main class="main-banner">
+        <h1 style="color: #ffaa00; margin-bottom: 25px;">🏆 Зал Славы Сервера</h1>
+
+        <div class="game-wrapper" style="max-width: 950px; margin: 0 auto;">
+            <section class="info-section" style="width: 440px; margin: 0;">
+                <h3 style="text-align: center; color: #55ff55;">💰 Топ Богачей</h3>
+                <table class="donate-table" style="margin: 0;">
+                    <thead>
+                        <tr>
+                            <th>Место</th>
+                            <th>Никнейм</th>
+                            <th>Баланс</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇 1</td>
+                            <td><span style="color:#ff4444;">Bulanchik</span></td>
+                            <td>1,500,000 $</td>
+                        </tr>
+                        <tr>
+                            <td>🥈 2</td>
+                            <td>X_Gamer_X</td>
+                            <td>890,000 $</td>
+                        </tr>
+                        <tr>
+                            <td>🥉 3</td>
+                            <td>MineBoy</td>
+                            <td>540,000 $</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>_Mr_Artem_</td>
+                            <td>310,000 $</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="info-section" style="width: 440px; margin: 0;">
+                <h3 style="text-align: center; color: #ff5555;">⚔️ Топ по PvP</h3>
+                <table class="donate-table" style="margin: 0;">
+                    <thead>
+                        <tr>
+                            <th>Место</th>
+                            <th>Никнейм</th>
+                            <th>Убийства</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇 1</td>
+                            <td>Killer_3000</td>
+                            <td>1,420 Kills</td>
+                        </tr>
+                        <tr>
+                            <td>🥈 2</td>
+                            <td>PvP_God</td>
+                            <td>980 Kills</td>
+                        </tr>
+                        <tr>
+                            <td>🥉 3</td>
+                            <td><span style="color:#55ffff;">Admin_Check</span></td>
+                            <td>710 Kills</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>_Noob_Slayer_</td>
+                            <td>450 Kills</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const canvas = document.getElementById('space-canvas'); const ctx = canvas.getContext('2d'); let stars = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); }
+        function init() { stars = []; for (let i = 0; i < 110; i++) stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2.2 + 1, color: '#ffaa00', alpha: Math.random(), speed: 0.025 }); }
+        function run() { ctx.clearRect(0, 0, canvas.width, canvas.height); stars.forEach(s => { s.alpha += s.speed; if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed; ctx.globalAlpha = Math.abs(s.alpha); ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill(); }); requestAnimationFrame(run); }
+        window.addEventListener('resize', resize); resize(); run();
+    </script>
+</body>
+
+</html>

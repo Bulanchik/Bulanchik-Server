@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bulanchik — Донат-Инфо</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo">Bulanchik <span class="server-status">ONLINE</span></div>
+        </div>
+        <ul>
+            <li><a href="../index.html">🏠 Главная</a></li>
+            <li><a href="donate.html">💎 Донат-Инфо</a></li>
+            <li><a href="shop.html">🛒 Купить</a></li>
+            <li><a href="rules.html">📜 Правила</a></li>
+            <li><a href="online.html">📊 Онлайн</a></li>
+        </ul>
+    </header>
+
+    <main class="main-container">
+        <h2 style="text-align:center; color:var(--accent-red); margin-bottom:20px;">💎 Прейскурант Услуг и Сравнение
+            Длительности</h2>
+
+        <div class="tabs-container">
+            <button class="tab-trigger active" onclick="switchPeriod('3d', this)">⏱️ 3 Дня</button>
+            <button class="tab-trigger" onclick="switchPeriod('7d', this)">📆 1 Неделя</button>
+            <button class="tab-trigger" onclick="switchPeriod('30d', this)">👑 1 Месяц</button>
+        </div>
+
+        <div class="donate-matrix-grid" id="matrix-renderer">
+            <!-- Сюда JS выведет все 24 товара -->
+        </div>
+    </main>
+
+    <script>
+        // Ровно 24 товара со всеми ценовыми диапазонами
+        const allItems = [
+            { name: "[VIP] Бес", desc: "Доступ к киту /kit vip, базовый флай.", p: { '3d': 19, '7d': 39, '30d': 89 } },
+            { name: "[Premium] Полудемон", desc: "Команды /heal, /feed, личный регион 300к блоков.", p: { '3d': 39, '7d': 69, '30d': 149 } },
+            { name: "[Admin] Судья", desc: "Возможность кикать, мутить нарушителей правил чата.", p: { '3d': 89, '7d': 149, '30d': 299 } },
+            { name: "[Lord] Повелитель", desc: "Режим бога /god, выдача кастомных голов.", p: { '3d': 159, '7d': 249, '30d': 499 } },
+            { name: "[Owner] Со-Создатель", desc: "Полный доступ к креатив моду, ванильным командам.", p: { '3d': 299, '7d': 499, '30d': 999 } },
+            { name: "Адский Донат-Кейс", desc: "Случайный донат статус от VIP до Owner.", p: { '3d': 29, '7d': 29, '30d': 29 } },
+            { name: "Мифический Ключ", desc: "Ключ к сундуку ценностей на спавне.", p: { '3d': 15, '7d': 15, '30d': 15 } },
+            { name: "Кейс с валютой", desc: "Выигрыш до 1,000,000$ игровой валюты.", p: { '3d': 19, '7d': 19, '30d': 19 } },
+            { name: "Разбан Аккаунта", desc: "Мгновенное удаление вашего никнейма из бан-листа.", p: { '3d': 99, '7d': 99, '30d': 99 } },
+            { name: "Снятие Мута", desc: "Досрочный возврат возможности писать в общий чат.", p: { '3d': 39, '7d': 39, '30d': 39 } },
+            { name: "Кастомный Текстовый Префикс", desc: "Цветной текст перед вашим ником в табе и чате.", p: { '3d': 49, '7d': 79, '30d': 149 } },
+            { name: "Сохранение инвентаря", desc: "Вещи больше никогда не выпадут при смерти.", p: { '3d': 59, '7d': 89, '30d': 199 } },
+            { name: "Набор /kit PVP", desc: "Полный боевой комплект з4 о4, чар яблоки.", p: { '3d': 25, '7d': 25, '30d': 25 } },
+            { name: "Набор /kit Строителя", desc: "Уникальные блоки, незерит, светящийся неон.", p: { '3d': 15, '7d': 15, '30d': 15 } },
+            { name: "Набор /kit Крутого", desc: "Фулл сет Незеритовой брони на Защиту IV.", p: { '3d': 49, '7d': 49, '30d': 49 } },
+            { name: "50,000$ Серверной Валюты", desc: "Деньги на покупку предметов на аукционе.", p: { '3d': 20, '7d': 20, '30d': 20 } },
+            { name: "200,000$ Серверной Валюты", desc: "Крупная сумма для развития клана.", p: { '3d': 60, '7d': 60, '30d': 60 } },
+            { name: "1,000,000$ Серверной Валюты", desc: "Вы становитесь топ-1 богачом сервера.", p: { '3d': 199, '7d': 199, '30d': 199 } },
+            { name: "Удаление чужого привата", desc: "Снос заброшенной постройки мешающей вам.", p: { '3d': 120, '7d': 120, '30d': 120 } },
+            { name: "Личный Эндер-Дракон", desc: "Питомец на котором можно летать по эндер-миру.", p: { '3d': 150, '7d': 250, '30d': 450 } },
+            { name: "Команда /nuke (Визуальная)", desc: "Взрыв ядерной бомбы на спавне без вреда блокам.", p: { '3d': 70, '7d': 110, '30d': 250 } },
+            { name: "Флай на спавне навсегда", desc: "Возможность летать на спавне без покупки привилегий.", p: { '3d': 30, '7d': 50, '30d': 99 } },
+            { name: "Разрешение на Смайлы в чате", desc: "Использование цветных смайликов :smile:.", p: { '3d': 15, '7d': 25, '30d': 49 } },
+            { name: "👑 Спонсорский Слот", desc: "Размещение вашего ника на спавне в списке спонсоров.", p: { '3d': 500, '7d': 800, '30d': 1500 } }
+        ];
+
+        let activePeriod = '3d';
+
+        function renderGrid() {
+            const container = document.getElementById('matrix-renderer');
+            container.innerHTML = '';
+            allItems.forEach(item => {
+                let currentPrice = item.p[activePeriod];
+                container.innerHTML += `
+                    <div class="product-card">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p style="font-size:12px; color:var(--text-muted);">${item.desc}</p>
+                        </div>
+                        <div>
+                            <div class="product-price">${currentPrice} ₽</div>
+                            <button class="action-btn" style="width:100%; padding:8px;" onclick="selectProduct('${item.name}', ${currentPrice})">Выбрать</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function switchPeriod(p, btn) {
+            activePeriod = p;
+            document.querySelectorAll('.tab-trigger').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderGrid();
+        }
+
+        function selectProduct(name, price) {
+            localStorage.setItem('checkout_item', name);
+            localStorage.setItem('checkout_price', price);
+            window.location.href = 'shop.html';
+        }
+
+        renderGrid();
+    </script>
+</body>
+
+</html>

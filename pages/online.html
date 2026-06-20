@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bulanchik — Статистика</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .online-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .val {
+            font-size: 28px;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo">Bulanchik</div>
+        </div>
+        <ul>
+            <li><a href="../index.html">🏠 Главная</a></li>
+            <li><a href="donate.html">💎 Донат-Инфо</a></li>
+            <li><a href="shop.html">🛒 Купить</a></li>
+            <li><a href="rules.html">📜 Правила</a></li>
+            <li><a href="online.html">📊 Онлайн</a></li>
+        </ul>
+    </header>
+
+    <main class="main-container">
+        <h2 style="color:var(--accent-red); margin-bottom:25px;">📊 Мониторинг Сервера</h2>
+
+        <div class="online-grid">
+            <div class="box">
+                <h5>Текущий Онлайн</h5>
+                <div class="val" id="count">24 / 100</div>
+            </div>
+            <div class="box">
+                <h5>Загрузка TPS</h5>
+                <div class="val" style="color:var(--success-green)">19.98</div>
+            </div>
+            <div class="box">
+                <h5>Пинг сети</h5>
+                <div class="val" style="color:var(--success-green)">18 мс</div>
+            </div>
+        </div>
+
+        <div class="interactive-panel">
+            <h3>⚡ Игроки в сети прямо сейчас:</h3>
+            <ul style="list-style:none; margin-top:15px;" id="list">
+                <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">🧔 <b>Maxim_Vostruhov</b> —
+                    <span style="color:var(--accent-red)">[Создатель]</span></li>
+                <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">⚔️ <b>Степка_ПВП</b> — <span
+                        style="color:#ffaa00">[Admin]</span></li>
+                <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">🏹 <b>Im_Gamer</b> —
+                    [Premium]</li>
+                <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">⛏️ <b>Minecraft_User</b> —
+                    Игрок</li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // Небольшая симуляция живого изменения онлайна
+        setInterval(() => {
+            let num = 18 + Math.floor(Math.random() * 10);
+            document.getElementById('count').innerText = `${num} / 100`;
+        }, 3000);
+    </script>
+</body>
+
+</html>

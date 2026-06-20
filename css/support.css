@@ -1,0 +1,11 @@
+.support-box {
+    position: fixed;
+    bottom: 80px;
+    right: 18px;
+
+    width: 260px;
+    padding: 12px;
+
+    background: #111;
+    border-radius: 14px;
+}
